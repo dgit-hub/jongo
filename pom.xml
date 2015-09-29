@@ -22,6 +22,7 @@
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
+        <relativePath/>
     </parent>
 
     <groupId>org.jongo</groupId>
@@ -343,6 +344,31 @@
     </reporting>
 
     <profiles>
+        <profile>
+          <id>enable-local-deployment</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+          <properties>
+             <!-- Distribution Management URLS -->
+             <dist.id>nexus</dist.id>
+             <dist.release>http://nexus:8081/nexus/content/repositories/dgit-maven-releases</dist.release>
+             <dist.snapshot>http://nexus:8081/nexus/content/repositories/dgit-maven-snapshots</dist.snapshot>
+          </properties>
+           <!-- Where to upload artifacts -->
+           <distributionManagement>
+             <repository>
+               <id>${dist.id}</id>
+               <name>Internal Releases</name>
+               <url>${dist.release}</url>
+             </repository>
+             <snapshotRepository>
+               <id>${dist.id}</id>
+               <name>Internal Snapshot Releases</name>
+               <url>${dist.snapshot}</url>
+             </snapshotRepository>
+           </distributionManagement>
+        </profile>
 
         <profile>
             <id>cloudbees</id>
